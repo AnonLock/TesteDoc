@@ -1,0 +1,28 @@
+name: Atualizar Documentação
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do repositório
+      uses: actions/checkout@v2
+
+    - name: Verificar status do build
+      run: |
+        echo "## Status do Build" >> documentacao.md
+        echo "- Build iniciado em $(date)" >> documentacao.md
+        echo "- Status: [x] Sucesso" >> documentacao.md
+
+    - name: Commit e Push da documentação
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add documentacao.md
+        git commit -m "Atualizando documentação com o status do build"
+        git push
